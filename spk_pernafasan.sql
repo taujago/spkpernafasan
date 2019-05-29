@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2019 at 03:15 PM
+-- Generation Time: May 30, 2019 at 06:16 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.36
 
@@ -118,16 +118,19 @@ DROP TABLE IF EXISTS `pemeriksaan`;
 CREATE TABLE IF NOT EXISTS `pemeriksaan` (
   `id` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+  `user_id` int(11) NOT NULL,
+  `penyakit_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pemeriksaan`
 --
 
-INSERT INTO `pemeriksaan` (`id`, `tanggal`, `user_id`) VALUES
-(36, '2019-05-29', 11),
-(37, '2019-05-29', 9);
+INSERT INTO `pemeriksaan` (`id`, `tanggal`, `user_id`, `penyakit_id`) VALUES
+(39, '2019-05-30', 1, 4),
+(40, '2019-05-30', 1, 4),
+(41, '2019-05-30', 1, 4),
+(42, '2019-05-30', 9, 4);
 
 -- --------------------------------------------------------
 
@@ -138,22 +141,32 @@ INSERT INTO `pemeriksaan` (`id`, `tanggal`, `user_id`) VALUES
 DROP TABLE IF EXISTS `pemeriksaan_detail`;
 CREATE TABLE IF NOT EXISTS `pemeriksaan_detail` (
   `id` int(11) NOT NULL,
-  `id_pemeriksaan` int(11) NOT NULL,
-  `id_gejala` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=latin1;
+  `pemeriksaan_id` int(11) NOT NULL,
+  `gejala_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pemeriksaan_detail`
 --
 
-INSERT INTO `pemeriksaan_detail` (`id`, `id_pemeriksaan`, `id_gejala`) VALUES
-(158, 36, 22),
-(159, 36, 33),
-(160, 36, 67),
-(161, 36, 77),
-(162, 37, 52),
-(163, 37, 55),
-(164, 37, 56);
+INSERT INTO `pemeriksaan_detail` (`id`, `pemeriksaan_id`, `gejala_id`) VALUES
+(165, 39, 139),
+(166, 39, 122),
+(167, 39, 143),
+(168, 39, 125),
+(169, 40, 139),
+(170, 40, 122),
+(171, 40, 143),
+(172, 40, 125),
+(173, 41, 139),
+(174, 41, 122),
+(175, 41, 143),
+(176, 41, 125),
+(177, 42, 132),
+(178, 42, 122),
+(179, 42, 141),
+(180, 42, 143),
+(181, 42, 144);
 
 -- --------------------------------------------------------
 
@@ -174,11 +187,9 @@ CREATE TABLE IF NOT EXISTS `pengetahuan` (
 
 INSERT INTO `pengetahuan` (`id`, `id_penyakit`, `id_gejala`) VALUES
 (342, 2, 84),
-(343, 3, 84),
 (344, 4, 84),
 (345, 53, 121),
 (346, 2, 121),
-(347, 3, 121),
 (348, 4, 121),
 (349, 6, 121),
 (350, 44, 121),
@@ -191,7 +202,6 @@ INSERT INTO `pengetahuan` (`id`, `id_penyakit`, `id_gejala`) VALUES
 (357, 56, 122),
 (358, 57, 122),
 (359, 2, 122),
-(360, 3, 122),
 (361, 6, 122),
 (362, 44, 122),
 (363, 52, 122);
@@ -220,9 +230,9 @@ CREATE TABLE IF NOT EXISTS `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id`, `username`, `password`, `level`, `nama`, `hp`, `alamat`, `jk`, `umur`) VALUES
-(1, 'admin', '0cc175b9c0f1b6a831c399e269772661', 1, 'Aministrator', '08132945559', 'Jl. kenair no. 343', '', 0),
+(1, 'admin', '0cc175b9c0f1b6a831c399e269772661', 1, 'Aministrator', '08132945559', 'Jl. kenair no. 343', 'L', 0),
 (7, 'budi', '0cc175b9c0f1b6a831c399e269772661', 0, 'Firmansyah', '0813280800', 'jl. kenari no. 34', 'L', 20),
-(8, 'bejo', '0cc175b9c0f1b6a831c399e269772661', 0, 'Bejo sandix', '0813243595', 'Jl. keramat jadixxx', 'P', 40),
+(8, 'bejo', '7fc56270e7a70fa81a5935b72eacbe29', 0, 'Bejo sandix', '0813243595', 'Jl. keramat jadixxx', 'P', 40),
 (9, 'heri', '0cc175b9c0f1b6a831c399e269772661', 0, 'Heru hendriyadi', '45838538r3985', 'Jl. undru no. 4', 'P', 40),
 (10, 'heru', '0cc175b9c0f1b6a831c399e269772661', 0, 'Heru hendriyadi', '083848583', 'Jl. kenari no. 345', 'L', 3),
 (11, 'eko', '0cc175b9c0f1b6a831c399e269772661', 0, 'Eko kurniawan', '03895935893', 'Jl. kenari no. 335', 'L', 25);
@@ -250,7 +260,6 @@ CREATE TABLE IF NOT EXISTS `penyakit` (
 INSERT INTO `penyakit` (`id`, `kode`, `penyakit`, `pengobatan`, `keterangan`, `gambar`) VALUES
 (1, 'PY1', 'Faringitis', 'Mengonsumsi obat pereda nyeri, banyak mengonsumsi air putih, banyak istirahat, Menggunakan pelembab udara di dalam ruangan, Mengonsumsi permen pelega tenggorokan', 'peradangan Tenggorokan', ''),
 (2, 'PY2', 'Laringitis', 'Hindari paparan debu, Jangan merokok, banyak mengkonsumsi air putih, Atur tingkat kelembapan udara di rumah.', 'Peradangan Pita Suara', ''),
-(3, 'PY3', 'Tonsilitis', 'Istirahat yang cukup, Minum air putih yang banyak, Makan buah nanas dan minum teh jahe, Minum campuran madu dan lemon, Berkumur dengan air garam', 'Radang Amandel', ''),
 (4, 'PY4', 'Sinusitis', 'Meminum obat antibiotik seperti Amoxilin, Ibuprofen. Istirahat yang cukup dan banyak mengkonsumsi air putih.', 'Penyumbatan Pada Hidung', ''),
 (5, 'PY5', 'Bronkitis', 'Istirahat yang cukup, Minum air putih yang banyak, dan minum teh jahe, Minum campuran madu dan lemon, Penguapan.', 'Peradangan Pada Saluran Utama Pernafasan (Bronkus)', ''),
 (6, 'PY6', 'Pleuritis', 'meminum obat antibiotik seperti paracetamol dan codeine. Kemudian berbaring menyamping di sisi dada yang sakit mungkin bisa membantu mengurangi rasa sakit.', 'Peradangan Pleura (Paru-Paru)', ''),
@@ -264,6 +273,56 @@ INSERT INTO `penyakit` (`id`, `kode`, `penyakit`, `pengobatan`, `keterangan`, `g
 (56, 'PY13', 'Epiglotitis', 'Melakukan terapi antibiotik. Jika belum bisa maka akan dilakukan penyinaran sinar X pada leher balita untuk membuka jalannya pernafasan pada balita.', 'Pembengkakan Pada Batang Tenggorokan', ''),
 (57, 'PY14', 'Commond Cold', 'Perlu dilakukan pemberian cairan/minum lebih banyak untuk pemantauan kondisi emergensi.', 'Flu Ringan', ''),
 (58, 'PY15', 'Emfisema', 'Dianjurkan untuk pemberian oksigen dan obat-obatan jika terjadi komplikasi segera lakukan operasi.', 'Kerusakan kantung-kantung Udara Pada Paru', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `referensi`
+--
+
+DROP TABLE IF EXISTS `referensi`;
+CREATE TABLE IF NOT EXISTS `referensi` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `umur` float NOT NULL,
+  `jk` char(2) NOT NULL,
+  `penyakit_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `referensi`
+--
+
+INSERT INTO `referensi` (`id`, `nama`, `umur`, `jk`, `penyakit_id`) VALUES
+(4, 'Budi', 34, 'L', 1),
+(5, 'Herman', 30, 'L', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `referensi_detail`
+--
+
+DROP TABLE IF EXISTS `referensi_detail`;
+CREATE TABLE IF NOT EXISTS `referensi_detail` (
+  `id` int(11) NOT NULL,
+  `gejala_id` int(11) NOT NULL,
+  `referensi_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `referensi_detail`
+--
+
+INSERT INTO `referensi_detail` (`id`, `gejala_id`, `referensi_id`) VALUES
+(9, 133, 5),
+(10, 134, 5),
+(11, 122, 5),
+(12, 150, 5),
+(13, 124, 5),
+(18, 122, 4),
+(19, 141, 4),
+(20, 123, 4);
 
 -- --------------------------------------------------------
 
@@ -282,49 +341,21 @@ CREATE TABLE IF NOT EXISTS `tmp` (
 --
 
 INSERT INTO `tmp` (`id_penyakit`, `skor`) VALUES
-(1, 0.000000282178),
-(2, 0.000000282178),
-(3, 0.000000428366),
-(4, 0.000000282178),
-(5, 0.000000282178),
-(6, 0.000000428366),
-(7, 0.000000428366),
-(8, 0.000000282178),
-(9, 0.000000428366),
-(10, 0.000000282178),
-(11, 0.000000428366),
-(12, 0.000000282178),
-(13, 0.000000282178),
-(14, 0.000000282178),
-(15, 0.000000282178),
-(16, 0.000000282178),
-(17, 0.000000282178),
-(18, 0.000000428366),
-(19, 0.000000282178),
-(20, 0.000000428366),
-(21, 0.000000282178),
-(22, 0.000000282178),
-(23, 0.000000282178),
-(24, 0.000000282178),
-(25, 0.000000428366),
-(26, 0.000000282178),
-(27, 0.000000282178),
-(28, 0.000000282178),
-(29, 0.000000428366),
-(30, 0.000000282178),
-(31, 0.000000282178),
-(32, 0.000000282178),
-(33, 0.000000282178),
-(34, 0.000000282178),
-(35, 0.000000282178),
-(36, 0.000000282178),
-(37, 0.000000282178),
-(38, 0.000000282178),
-(39, 0.000000282178),
-(40, 0.000000650291),
-(41, 0.000000282178),
-(42, 0.000000282178),
-(43, 0.000000282178);
+(1, 0.0666667),
+(53, 0.0666667),
+(54, 0.0666667),
+(55, 0.0666667),
+(56, 0.0666667),
+(57, 0.0666667),
+(58, 0.0666667),
+(2, 0.0666667),
+(4, 0.0666667),
+(5, 0.0666667),
+(6, 0.0666667),
+(44, 0.0666667),
+(50, 0.0666667),
+(51, 0.0666667),
+(52, 0.0666667);
 
 --
 -- Indexes for dumped tables
@@ -353,7 +384,7 @@ ALTER TABLE `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan_detail`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pemeriksaan` (`id_pemeriksaan`);
+  ADD KEY `fk_pemeriksaan` (`pemeriksaan_id`);
 
 --
 -- Indexes for table `pengetahuan`
@@ -374,6 +405,18 @@ ALTER TABLE `penyakit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `referensi`
+--
+ALTER TABLE `referensi`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `referensi_detail`
+--
+ALTER TABLE `referensi_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -391,12 +434,12 @@ ALTER TABLE `konsultasi`
 -- AUTO_INCREMENT for table `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `pemeriksaan_detail`
 --
 ALTER TABLE `pemeriksaan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=165;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=182;
 --
 -- AUTO_INCREMENT for table `pengetahuan`
 --
@@ -413,6 +456,16 @@ ALTER TABLE `pengguna`
 ALTER TABLE `penyakit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
 --
+-- AUTO_INCREMENT for table `referensi`
+--
+ALTER TABLE `referensi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `referensi_detail`
+--
+ALTER TABLE `referensi_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
 -- Constraints for dumped tables
 --
 
@@ -420,7 +473,7 @@ ALTER TABLE `penyakit`
 -- Constraints for table `pemeriksaan_detail`
 --
 ALTER TABLE `pemeriksaan_detail`
-  ADD CONSTRAINT `fk_pemeriksaan` FOREIGN KEY (`id_pemeriksaan`) REFERENCES `pemeriksaan` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_pemeriksaan` FOREIGN KEY (`pemeriksaan_id`) REFERENCES `pemeriksaan` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
