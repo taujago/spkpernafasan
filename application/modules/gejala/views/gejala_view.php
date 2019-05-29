@@ -14,6 +14,7 @@
 				<th width="5%">NO </th>
 				<th width="5%">KODE </th>
 				<th width="50%">GEJALA</th>
+				<th width="5%">BOBOT</th>
 				<th width="10%">PROSES</th>
 				 
 			</tr>
@@ -28,8 +29,9 @@ foreach($record->result() as $row) :
 				<th scope="row"><?php echo $n ?></th>
 				<td><?php echo $row->kode; ?></td>
 				<td><?php echo $row->gejala; ?></td>
+				<td><?php echo $row->bobot; ?></td>
 				<td>
-					<a href="#!"  onclick="edit('<?php echo $row->id; ?>','<?php echo $row->kode; ?>','<?php echo $row->gejala; ?>');"  class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
+					<a href="#!"  onclick="edit('<?php echo $row->id; ?>','<?php echo $row->kode; ?>','<?php echo $row->gejala; ?>',,'<?php echo $row->bobot; ?>');"  class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
 					<a href="#!" onclick="hapus('<?php echo $row->id; ?>');"  class="btn btn-danger text-light"><i class="fa fa-trash"></i>Hapus	</a>
 </td>
 			</tr>
@@ -61,6 +63,11 @@ foreach($record->result() as $row) :
 
 					</div>
 
+					<div class="form-group">
+						<label for="bobot" class="form-control-label">Bobot:</label>
+						<input type="number" min="0" step="0.1" name="bobot" class="form-control" id="bobot">
+
+					</div>
 					<div class="form-group">
 						<label for="gejala" class="form-control-label">Penyakit :</label>
 

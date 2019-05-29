@@ -98,9 +98,9 @@ class penyakit extends master_controller {
  			// unset($post['id']);
 
 
- 			$arr_penyakit = $post['id_penyakit'];
+ 			$arr_gejala = $post['id_gejala'];
 
- 			unset($post['id_penyakit']);
+ 			unset($post['id_gejala']);
 
 
  			$this->db->where("id",$post['id']);
@@ -111,10 +111,10 @@ class penyakit extends master_controller {
  				$this->db->where("id_penyakit",$post['id']);
  				$this->db->delete("pengetahuan");
 
- 				foreach($arr_penyakit as $id_penyakit):
+ 				foreach($arr_gejala as $id_gejala):
  					$arr_pengetahuan = array(
 
- 						"id_penyakit" => $id_penyakit,
+ 						"id_gejala" => $id_gejala,
  						"id_penyakit" => $post['id']
  					);
  					$this->db->insert("pengetahuan",$arr_pengetahuan);

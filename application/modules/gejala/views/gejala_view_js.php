@@ -69,7 +69,7 @@ $("#id_penyakit").select2();
 
 
 
-function edit(id,kode,gejala){
+function edit(id,kode,gejala,bobot){
 	$("#judul").html('EDIT DATA GEJALA ');
 	
 	v_url = '<?php echo site_url("$this->controller/update") ?>';
@@ -79,6 +79,7 @@ function edit(id,kode,gejala){
 	$("#id").val(id);
 	$("#kode").val(kode);
 	$("#gejala").val(gejala);
+	$("#bobot").val(bobot);
 	$("#formModal").modal('show');
 
 

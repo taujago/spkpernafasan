@@ -44,6 +44,7 @@ $("#id_gejala").select2();
 
 	function tambahbaru(){
 		$("#formModal").modal('show');
+		$("#judul").html('TAMBAH DATA PENYAKIT ');
 		$("#kode").val('');
 		$("#penyakit").val('');
 		v_url = '<?php echo site_url("$this->controller/save") ?>';
@@ -70,7 +71,7 @@ $("#id_gejala").select2();
 
 
 function edit(id,kode,penyakit){
-	$("#judul").html('EDIT DATA GEJALA ');
+	$("#judul").html('EDIT DATA PENYAKIT ');
 	
 	v_url = '<?php echo site_url("$this->controller/update") ?>';
 

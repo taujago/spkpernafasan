@@ -14,6 +14,8 @@
 				<th width="5%">NO </th>
 				<th width="5%">KODE </th>
 				<th width="50%">PENYAKIT</th>
+				<th width="50%">KETERANGAN</th>
+				<th width="50%">PENGOBATAN</th>
 				<th width="10%">PROSES</th>
 				 
 			</tr>
@@ -28,8 +30,10 @@ foreach($record->result() as $row) :
 				<th scope="row"><?php echo $n ?></th>
 				<td><?php echo $row->kode; ?></td>
 				<td><?php echo $row->penyakit; ?></td>
+				<td><?php echo $row->keterangan; ?></td>
+				<td><?php echo $row->pengobatan; ?></td>
 				<td>
-					<a href="#!"  onclick="edit('<?php echo $row->id; ?>','<?php echo $row->kode; ?>','<?php echo $row->penyakit; ?>');"  class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
+					<a href="#!"  onclick="edit('<?php echo $row->id; ?>','<?php echo $row->kode; ?>','<?php echo $row->penyakit; ?>','<?php echo $row->keterangan; ?>','<?php echo $row->pengobatan; ?>');"  class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
 					<a href="#!" onclick="hapus('<?php echo $row->id; ?>');"  class="btn btn-danger text-light"><i class="fa fa-trash"></i>Hapus	</a>
 </td>
 			</tr>
@@ -58,6 +62,18 @@ foreach($record->result() as $row) :
 					<div class="form-group">
 						<label for="gejala" class="form-control-label">Penyakit:</label>
 						<input type="text"  name="penyakit" class="form-control" id="penyakit">
+
+					</div>
+
+					<div class="form-group">
+						<label for="keterangan" class="form-control-label">Keterangan:</label>
+						<input type="text"  name="keterangan" class="form-control" id="keterangan">
+
+					</div>
+
+					<div class="form-group">
+						<label for="pengobatan" class="form-control-label">Pengobatan:</label>
+						<input type="text"  name="pengobatan" class="form-control" id="pengobatan">
 
 					</div>
 

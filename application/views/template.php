@@ -155,7 +155,7 @@
 								<!-- dropdown-menu -->
 							</li>
 							 
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link  <?php echo ($this->controller=="konsumen")?"active":""; ?>" href="<?php echo site_url("konsumen"); ?>">
 									<i class="fa fa-user"></i>
 									<span>DATA PASIEN</span>
@@ -176,7 +176,7 @@
 									<i class="fa fa-window-restore"></i>
 									<span>LIHAT DATA KONSULTASI</span>
 								</a>
-							</li>
+							</li> -->
 							 
 							 
 							<!-- <li class="nav-item">
@@ -215,7 +215,7 @@
 				<div class="container">
 					<div class="row align-items-center flex-row-reverse">
 						<div class="col-lg-12 col-sm-12 mt-3 mt-lg-0 text-center">
-							Copyright © 2019. Dibuat oleh Fera sebagai syarat kelulusan meraih gelar Sarjana Teknik. Universitas Sains dan Teknologi Jayapura 
+							Copyright © 2019. Dibuat oleh Angraini Sinaga sebagai syarat kelulusan meraih gelar Sarjana Teknik. Universitas Sains dan Teknologi Jayapura 
 						</div>
 					</div>
 				</div>
