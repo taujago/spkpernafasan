@@ -42,7 +42,7 @@ class gejala extends master_controller {
  		if($this->form_validation->run() == TRUE ) { 
  			unset($post['id']);
 
- 			$arr_penyakit = $post['id_penyakit'];
+ 			$arr_penyakit = isset($post['id_penyakit'])?$post['id_penyakit']:array();
 
  			unset($post['id_penyakit']);
 

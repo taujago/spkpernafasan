@@ -31,7 +31,7 @@ foreach($record->result() as $row) :
 				<td><?php echo $row->gejala; ?></td>
 				<td><?php echo $row->bobot; ?></td>
 				<td>
-					<a href="#!"  onclick="edit('<?php echo $row->id; ?>','<?php echo $row->kode; ?>','<?php echo $row->gejala; ?>',,'<?php echo $row->bobot; ?>');"  class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
+					<a href="#!"  onclick="edit('<?php echo $row->id; ?>','<?php echo $row->kode; ?>','<?php echo $row->gejala; ?>','<?php echo $row->bobot; ?>');"  class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
 					<a href="#!" onclick="hapus('<?php echo $row->id; ?>');"  class="btn btn-danger text-light"><i class="fa fa-trash"></i>Hapus	</a>
 </td>
 			</tr>
