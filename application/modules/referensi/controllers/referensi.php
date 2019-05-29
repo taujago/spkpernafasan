@@ -1,5 +1,5 @@
 <?php
-class penyakit extends master_controller {
+class referensi extends master_controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model("coremodel","cm");
@@ -13,13 +13,20 @@ class penyakit extends master_controller {
 		$data_array = array();
 
 
-		$this->db->select('*')->from('penyakit');
+		$this->db->select('r.*, p.kode as kodepenyakit, group_concat(g.kode) as gejala ',false)
+		->from('referensi r')
+		->join("referensi_detail rd","r.id = rd.referensi_id")
+		->join("gejala g","g.id = rd.gejala_id")
+		->join("penyakit p","p.id = r.penyakit_id ")
+		->order_by("g.kode")
+		->group_by("r.id");
+
 		$res = $this->db->get();
 		$data_array['record'] = $res; 
 		 
 		$content = $this->load->view($this->controller."_view",$data_array,true);
 
-		$this->set_title("DATA  PENYAKIT");
+		$this->set_title("DATA  REFERENSI PENYAKIT ");
 		$this->set_content($content);
 		$this->render();
 	}
@@ -31,8 +38,8 @@ class penyakit extends master_controller {
 		// show_array($post); exit;
 
 		$this->load->library('form_validation');
- 		$this->form_validation->set_rules('kode','Kode','required');
- 		$this->form_validation->set_rules('penyakit','penyakit','required');
+ 		$this->form_validation->set_rules('nama','Nama','required');
+ 		$this->form_validation->set_rules('umur','Umur','required');
  		
 		 
 		$this->form_validation->set_message('required', ' %s Harus diisi ');
@@ -42,33 +49,33 @@ class penyakit extends master_controller {
  		if($this->form_validation->run() == TRUE ) { 
  			unset($post['id']);
 
- 			$arr_gejala = isset($post['id_gejala'])?$post['id_gejala']:array();
+ 			$arr_gejala = isset($post['gejala_id'])?$post['gejala_id']:array();
 
- 			unset($post['id_gejala']);
+ 			unset($post['gejala_id']);
 
- 			$res = $this->db->insert("penyakit",$post);
- 			$id_penyakit = $this->db->insert_id();
+ 			$res = $this->db->insert("referensi",$post);
+ 			$referensi_id = $this->db->insert_id();
 
  			if($res){
 
- 				$this->db->where("id_penyakit",$id_penyakit);
- 				$this->db->delete("pengetahuan");
+ 				$this->db->where("referensi_id",$referensi_id);
+ 				$this->db->delete("referensi_detail");
 
- 				foreach($arr_gejala as $id_gejala):
- 					$arr_pengetahuan = array(
+ 				foreach($arr_gejala as $gejala_id):
+ 					$arr_ref = array(
 
- 						"id_gejala" => $id_gejala,
- 						"id_penyakit" => $id_penyakit
+ 						"gejala_id" => $gejala_id,
+ 						"referensi_id" => $referensi_id
  					);
  					// show_array($arr_pengetahuan); 
- 					$this->db->insert("pengetahuan",$arr_pengetahuan);
+ 					$this->db->insert("referensi_detail",$arr_ref);
  				endforeach;
 
 
- 				$ret = array("error"=>false,"message"=>"Data penyakit berhasil disimpan");
+ 				$ret = array("error"=>false,"message"=>"Data referensi berhasil disimpan");
  			}
  			else {
- 				$ret = array("error"=>true,"message"=>"Data gagal disimpan".mysql_error());
+ 				$ret = array("error"=>true,"message"=>"Data referensi disimpan".mysql_error());
  			}
  		}
  		else {
@@ -86,8 +93,8 @@ class penyakit extends master_controller {
 		$post = $this->input->post();
 
 		$this->load->library('form_validation');
- 		$this->form_validation->set_rules('kode','Kode','required');
- 		$this->form_validation->set_rules('penyakit','penyakit','required');
+ 		$this->form_validation->set_rules('nama','Nama','required');
+ 		$this->form_validation->set_rules('umur','Umur','required');
  		
 		 
 		$this->form_validation->set_message('required', ' %s Harus diisi ');
@@ -98,31 +105,33 @@ class penyakit extends master_controller {
  			// unset($post['id']);
 
 
- 			$arr_gejala = $post['id_gejala'];
+ 			$arr_gejala = isset($post['gejala_id'])?$post['gejala_id']:array();
 
- 			unset($post['id_gejala']);
+ 			unset($post['gejala_id']);
 
 
  			$this->db->where("id",$post['id']);
- 			$res = $this->db->update("penyakit",$post);
+ 			$res = $this->db->update("referensi",$post);
+ 			$referensi_id = $post['id'];
 
  			if($res){
 
- 				$this->db->where("id_penyakit",$post['id']);
- 				$this->db->delete("pengetahuan");
+ 				$this->db->where("referensi_id",$referensi_id);
+ 				$this->db->delete("referensi_detail");
 
- 				foreach($arr_gejala as $id_gejala):
- 					$arr_pengetahuan = array(
+ 				foreach($arr_gejala as $gejala_id):
+ 					$arr_ref = array(
 
- 						"id_gejala" => $id_gejala,
- 						"id_penyakit" => $post['id']
+ 						"gejala_id" => $gejala_id,
+ 						"referensi_id" => $referensi_id
  					);
- 					$this->db->insert("pengetahuan",$arr_pengetahuan);
+ 					// show_array($arr_pengetahuan); 
+ 					$this->db->insert("referensi_detail",$arr_ref);
  				endforeach;
 
 
 
- 				$ret = array("error"=>false,"message"=>"Data penyakit berhasil diupdate");
+ 				$ret = array("error"=>false,"message"=>"Data referensi berhasil diupdate");
  			}
  			else {
  				$ret = array("error"=>true,"message"=>"Data gagal diupdate".mysql_error());
@@ -141,11 +150,11 @@ class penyakit extends master_controller {
 function hapus($id) {
 
 	$this->db->where("id",$id);
-	$res = $this->db->delete("penyakit");
+	$res = $this->db->delete("referensi");
 	if($res){
 
-		$this->db->where("id_penyakit",$id);
-		$this->db->delete("pengetahuan");
+		$this->db->where("referensi_id",$id);
+		$this->db->delete("referensi_detail");
 
 
 		$ret = array("error"=>false,"message"=>"Data harga berhasil dihapus");
@@ -158,22 +167,22 @@ function hapus($id) {
 }
 
 
-function get_gejala($id_penyakit){
+function get_gejala($referensi_id){
 
-	$this->db->where("id_penyakit",$id_penyakit);
-	$res = $this->db->get("pengetahuan");
-	$arr_pengetahuan = array();
+	$this->db->where("referensi_id",$referensi_id);
+	$res = $this->db->get("referensi_detail");
+	$arr_referensi = array();
 	foreach($res->result() as $row) : 
-		$arr_pengetahuan[] = $row->id_gejala;
+		$arr_referensi[] = $row->gejala_id;
 	endforeach;
 
-	// show_array($arr_pengetahuan);exit;
+	// show_array($arr_referensi);exit;
 
 	$this->db->order_by("kode");
 	$res  = $this->db->get("gejala");
 
 	foreach($res->result() as $row_gejala): 
-		$selected = ( in_array($row_gejala->id, $arr_pengetahuan) )?"selected":"";
+		$selected = ( in_array($row_gejala->id, $arr_referensi) )?"selected":"";
 		echo "<option value=$row_gejala->id $selected>$row_gejala->kode $row_gejala->gejala</option>";
 
 		// $arr[] = array("id"=>$row_gejala->id,"text"=>"$row_gejala->kode $row_gejala->penyakit");

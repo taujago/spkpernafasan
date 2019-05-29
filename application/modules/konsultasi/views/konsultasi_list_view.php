@@ -31,7 +31,7 @@
 			<td><?php echo $row->umur; ?></td>
 			<td><?php echo $row->jk; ?></td>
 			<td><?php echo $row->alamat; ?></td>
-			<td><a class="btn btn-primary" href="<?php echo site_url("$this->controller/detail/$row->id") ?>" ><i class="fa fa-list"></i> LIHAT HASIL</a></td>
+			<td><a class="btn btn-primary" href="<?php echo site_url("$this->controller/review/$row->id") ?>" ><i class="fa fa-list"></i> LIHAT HASIL</a></td>
 
 		</tr>
 

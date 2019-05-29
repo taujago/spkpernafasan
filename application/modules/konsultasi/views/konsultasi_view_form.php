@@ -62,7 +62,7 @@
 	<label for="gejala"><strong>Gejala   </strong></label>
 	<?php 
 	$arr_gejala = $this->cm->arr_dropdown_gejala();
-	echo form_dropdown("id_gejala[]",$arr_gejala,'','id="id_gejala" class="form-control" multiple="multiple"');
+	echo form_dropdown("gejala_id[]",$arr_gejala,'','id="gejala_id" class="form-control" multiple="multiple"');
 
 	?>
 </div>
@@ -87,7 +87,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#id_gejala").select2();
+	$("#gejala_id").select2();
 });
 </script>
 

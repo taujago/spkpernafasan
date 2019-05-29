@@ -22,109 +22,155 @@ class konsultasi extends master_controller {
 		 
 		$content = $this->load->view($this->controller."_view_form",$data_array,true);
 
-		$this->set_title("KONSULTASI PENYAKIT MATA");
+		$this->set_title("KONSULTASI  PENYAKIT PERNAFASAN");
 		$this->set_content($content);
 		$this->render();
 	}
 
 
 
-
 function index2(){
+$post = $this->input->post();
+// show_array($post);
+
+$arr = array("tanggal"=>date("Y-m-d"),
+			 "user_id"=>$_SESSION['userdata'][0]['id'] 
+
+			 );
+
+$this->db->insert("pemeriksaan",$arr);
+$pemeriksaan_id = $this->db->insert_id();
+
+foreach($post['gejala_id'] as $gejala_id): 
+	$tmp['pemeriksaan_id'] = $pemeriksaan_id;
+	$tmp['gejala_id'] = $gejala_id;
+	$this->db->insert("pemeriksaan_detail",$tmp);
+endforeach;
+
+redirect("$this->controller/review/$pemeriksaan_id");
 
 
 
+}
 
-		 $post = $this->input->post();
-		 // show_array($post);
+function review($id){
+// $post = $this->input->post();
+// show_array($post);
+/// get gejala dan buat dalam bentuk array dengan format contoh sbb : 
+// Array
+// (
+//     [gejala_id] => Array
+//         (
+//             [0] => 139
+//             [1] => 122
+//             [2] => 143
+//             [3] => 125
+//         )
 
-		 $this->db->order_by("kode");
-		 $res = $this->db->get("penyakit");
-
-		 $jml_penyakit = $res->num_rows();
-
-		 $arr = array();
-
-		 $arr_hitung = array();
-		 $arr_nilai_p = array();
-
-		 $this->db->query("delete from tmp");
-
-		 
-		 $jml_gejala = $this->db->get("gejala")->num_rows();
-
-		 foreach($res->result() as $row) : 
-
-		 	// $arr[$row->id] = array();
-		 	$sum = (1/$jml_penyakit);
-		 	//echo "sum awal $sum <br />";
-		 	 foreach($post['id_gejala'] as $id_gejala) : 
-		 	 	$this->db->where("id_gejala",$id_gejala);
-		 	 	$this->db->where("id_penyakit",$row->id);
-		 	 	$jumlah  = $this->db->get("pengetahuan")->num_rows();
-		 	 	$arr[$row->id][$id_gejala] = $jumlah;
-
-		 	 	$arr_hitung[$row->id][$id_gejala] = 
-		 	 	($jumlah + ($jml_gejala * (1/$jml_penyakit)) )  / (1+$jml_gejala);
-
-		 	 	// $arr_nilai_p[$row->id] = $sum
-		 	 	$p = $arr_hitung[$row->id][$id_gejala];
-
-		 	 	 $sum = $sum *  $p;
-
-		 	 	// echo "$p  <br />";
-		 	 	// echo "$sum = $sum *  $arr_hitung['$row->id']['$id_gejala']";
+// )	
+$this->db->where("pemeriksaan_id",$id);
+$rs = $this->db->get("pemeriksaan_detail");
+foreach($rs->result() as $r): 
+	$post['gejala_id'][] = $r->id;
+endforeach;
 
 
-		 	 endforeach;
-		 	 // echo "$sum <hr />";
-		 	 $arr_nilai_p[$row->id] =$sum;  
-		 	 $arr_insert = array("id_penyakit"=>$row->id, "skor"=>$arr_nilai_p[$row->id]);
-		 	 $this->db->insert("tmp",$arr_insert);
-		 endforeach;
-		// show_array($arr);
-		// show_array($arr_hitung);
-		// show_array($arr_nilai_p);
-		 $data_array['arr_nilai_p'] = $arr_nilai_p;
-		 $data_array['arr'] = $arr;
-		 $data_array['arr_hitung'] = $arr_hitung;
-		 $data_array['post'] = $post;
+// buat referensi array gejala 
+$res = $this->db->get("gejala");
+$ref_gejala = array();
+foreach($res->result() as $rg): 
+	$ref_gejala[$rg->id] = $rg->bobot;
+endforeach;
 
-		 $this->db->select("p.*, s.skor")
-		 ->from("penyakit p")
-		 ->join("tmp s","p.id = s.id_penyakit");
+ 
 
-		 $this->db->order_by("skor","desc");
-		 $data_array['rec_hasil'] = $this->db->get();
-		 $data_array['post'] = $post;
+ 
+	 // redirect("konsultasi/detail/$id_pemeriksaan");
 
-		 $content = $this->load->view($this->controller."_view_result",$data_array,true);
+// ambil data referensi pasien lama 
+  $res = $this->db->get("referensi");
+
+  $arr_ref = array();
+
+  $arr_hasil = array();
+  foreach($res->result() as $row): 
+  		$arr_ref[$row->id] = array(
+  			"nama" => $row->nama,
+  			"umur" => $row->umur,
+  			"jk"   => $row->jk,
+  			"penyakit_id" => $row->penyakit_id
+  		);
+
+  		$this->db->where("referensi_id",$row->id);
+  		$rs_ref = $this->db->get("referensi_detail");
+  		foreach($rs_ref->result() as $rf ) : 
+  			$arr_ref[$row->id]['gejala'][] = $rf->gejala_id ;
+  		endforeach;
+  		$total_bobot = 0;
+  		$tmp =0;
+  		foreach($ref_gejala as $gejala_id => $bobot): 
+  			 $x = (in_array($gejala_id,$arr_ref[$row->id]['gejala']))?1:0;
+  			 $y = (in_array($gejala_id,$post['gejala_id']))?1:0;
+  			 $arr_ref[$row->id]['kemiripan'][$gejala_id] = !($x xor $y);
+  			 $tmp += $arr_ref[$row->id]['kemiripan'][$gejala_id] * $bobot;
+  			 $total_bobot += $bobot;
+  		endforeach;
+  		$arr_ref[$row->id]['score'] = $tmp / $total_bobot;
+
+  		$arr_hasil[$row->id] = $arr_ref[$row->id]['score']; 
+  endforeach;
+
+arsort($arr_hasil);
+
+ 
+$data_array['ref_gejala'] = $ref_gejala;
+$data_array['arr_ref'] = $arr_ref;
+$data_array['arr_hasil'] = $arr_hasil;
+
+// show_array($arr_hasil); 
+
+// get data pasien 
+$this->db->select("u.*, p.tanggal")
+->from("pengguna u")
+->join("pemeriksaan p","u.id = p.user_id")
+->where("p.id",$id);
+
+$data_array['userdata'] = $this->db->get()->row_array();
 
 
-		 $gejala = $post['id_gejala'];
+// get data gejala yang dialami 
+$this->db->select("g.*")
+->from("gejala g")
+->join("pemeriksaan_detail pd","pd.gejala_id = g.id")
+->where("pemeriksaan_id",$id);
 
- 		 unset($post['id_gejala']);
- 		 $dp['tanggal'] = date("Y-m-d");
- 		 $dp['user_id'] = $_SESSION['userdata'][0]['id'];
+$data_array['rec_gejala_hasil'] = $this->db->get();
 
- 		 $this->db->insert("pemeriksaan",$dp);
- 		 $id_pemeriksaan = $this->db->insert_id();
-
- 		 $_SESSION['pemeriksaan_id'] = $id_pemeriksaan;
-
- 		 foreach($gejala as $id_gejala) : 
- 		 	$arr_insert = array("id_pemeriksaan"=>$id_pemeriksaan,
- 		 						"id_gejala"=>$id_gejala);
- 		 	$this->db->insert("pemeriksaan_detail",$arr_insert);
- 		 endforeach;
+// ambil data penyakit hasil 
+$id_penyakit = "";
+foreach($arr_hasil as $xy => $hasil): 
+	$id_penyakit = $xy; 
+	break;
+endforeach;
 
 
-		// $this->set_title("KONSULTASI PENYAKIT MATA");
-		// $this->set_content($content);
-		// $this->render();
- 		 redirect("konsultasi/detail/$id_pemeriksaan");
+// echo "id penyakit $id_penyakit"; exit;
+$this->db->where("id",$id_penyakit);
+$data_array['penyakit'] = $this->db->get("penyakit")->row();
 
-	}
+// terakhir update id penyakit ke data  pemeriksaan 
+$this->db->where("id",$id);
+$this->db->update("pemeriksaan",array("penyakit_id"=>$id_penyakit));
+
+
+$content = $this->load->view($this->controller."_view_result",$data_array,true);
+
+$this->set_title("HASIL DIAGNOSA");
+$this->set_content($content);
+$this->render();
+
+
+}
 
 // function list(){
 // 	echo "flow";
@@ -153,119 +199,31 @@ $this->set_content($content);
 $this->render();
 
 }
+ 
 
-function detail($id){
-	// echo "id " . $id; exit;
-	$_SESSION['pemeriksaan_id'] = $id;
-	$this->db->where("id",$id);
-	$dp = $this->db->get("pemeriksaan")->row_array();
+function laporan(){
 
-	$this->db->where("id_pemeriksaan",$id);
-	$res  = $this->db->get("pemeriksaan_detail");
-	$gejala = array();
-	foreach($res->result() as $row): 
-		$gejala[] = $row->id_gejala;
-	endforeach;
+$sql = " select * from ( 
+SELECT p.*, 
+       count(pm.id) as jumlah , 
+      sum( if(u.jk='L',1,0)) as L,
+      sum( if(u.jk='P',1,0)) as P     
+  
+    FROM penyakit p 
+left join pemeriksaan pm on p.id = pm.penyakit_id
+left join pengguna u on u.id = pm.user_id 
+  group by p.id 
+  ) x 
+  order by x.jumlah desc
+";
 
+$data_array['record'] = $this->db->query($sql);
 
+$content = $this->load->view($this->controller."_laporan_view",$data_array,true);
 
-
-		$this->db->order_by("kode");
-		 $res = $this->db->get("penyakit");
-$jml_penyakit = $res->num_rows();
-		$arr = array();
-
-		 $arr_hitung = array();
-		 $arr_nilai_p = array();
-
-		 $this->db->query("delete from tmp");
-
-$jml_gejala = $this->db->get("gejala")->num_rows();
-		 foreach($res->result() as $row) : 
-
-		 	// $arr[$row->id] = array();
-		 	$sum = (1/$jml_penyakit);
-		 	//echo "sum awal $sum <br />";
-		 	 foreach($gejala as $id_gejala) : 
-		 	 	$this->db->where("id_gejala",$id_gejala);
-		 	 	$this->db->where("id_penyakit",$row->id);
-		 	 	$jumlah  = $this->db->get("pengetahuan")->num_rows();
-		 	 	$arr[$row->id][$id_gejala] = $jumlah;
-
-		 	 	$arr_hitung[$row->id][$id_gejala] = 
-		 	 	($jumlah + ($jml_gejala * (1/$jml_penyakit)) )  / (1+$jml_gejala);
-
-		 	 	// $arr_nilai_p[$row->id] = $sum
-		 	 	$p = $arr_hitung[$row->id][$id_gejala];
-
-		 	 	 $sum = $sum *  $p;
-
-		 	 	// echo "$p  <br />";
-		 	 	// echo "$sum = $sum *  $arr_hitung['$row->id']['$id_gejala']";
-
-
-		 	 endforeach;
-		 	 // echo "$sum <hr />";
-		 	 $arr_nilai_p[$row->id] =$sum;  
-		 	 $arr_insert = array("id_penyakit"=>$row->id, "skor"=>$arr_nilai_p[$row->id]);
-		 	 $this->db->insert("tmp",$arr_insert);
-		 endforeach;
-		// show_array($arr);
-		// show_array($arr_hitung);
-		// show_array($arr_nilai_p);
-		 $data_array['arr_nilai_p'] = $arr_nilai_p;
-		 $data_array['arr'] = $arr;
-		 $data_array['arr_hitung'] = $arr_hitung;
-		 
-
-		 $this->db->select("p.*, s.skor")
-		 ->from("penyakit p")
-		 ->join("tmp s","p.id = s.id_penyakit");
-
-		 $this->db->order_by("skor","desc");
-		 $data_array['rec_hasil'] = $this->db->get();
-
-
-
-
-
-
-	$data_array['post'] = $dp;
-	$data_array['post']['id_gejala'] = $gejala;
-	$data_array['pemeriksaan_id'] = $id;
-
-	$content = $this->load->view($this->controller."_view_result",$data_array,true);
-$this->set_title("KONSULTASI PENYAKIT MATA");
-		$this->set_content($content);
-		$this->render();
-
-
-}
-
-function savekonsultasi(){
-
-	$post = $this->input->post();
-	$post['user_id'] = $_SESSION['userdata'][0]['id'];
-	$post['waktu'] = date("Y-m-d h:i:s");
-	$post['pemeriksaan_id'] = $_SESSION['pemeriksaan_id'];
-
-	// show_array($post);
-	$res = $this->db->insert("konsultasi",$post);
-	// echo $this->db->last_query();
-	$ret = array("message"=>"Pesan berhasil dikirim","id"=>$_SESSION['pemeriksaan_id']);
-	echo json_encode($ret);
-}
-
-function get_conv(){
-
-	$this->db->select('k.*, u.nama,u.level')
-	->from('konsultasi k')
-	->join('pengguna u','u.id=k.user_id');
-	$this->db->order_by("waktu","asc");
-	$this->db->where("pemeriksaan_id",$_SESSION['pemeriksaan_id']);
-	$res = $this->db->get();
-	$arr['record'] = $res; 
-	$this->load->view("konsultasi_view_conv",$arr);
+$this->set_title("LAPORAN REKAPITULASI HASIL PEMERIKSAAN");
+$this->set_content($content);
+$this->render();
 
 
 }

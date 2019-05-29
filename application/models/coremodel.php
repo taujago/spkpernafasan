@@ -44,5 +44,15 @@ function arr_dropdown_penyakit(){
     return $arr;
  }
 
+ function arr_dropdown_gejalax(){
+    $this->db->order_by("kode");
+    $res = $this->db->get("gejala");
+    $arr = array();
+    foreach($res->result() as $row) : 
+        $arr[$row->id] = $row->kode." ".$row->gejala;
+    endforeach;
+    return $arr;
+ }
+
 }
 ?>

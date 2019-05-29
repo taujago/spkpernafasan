@@ -136,7 +136,7 @@
 							<li class="nav-item with-sub">
 								<a class="nav-link
 								 <?php echo ($this->controller=="gejala" || $this->controller=="penyakit" || $this->controller=="pengetahuan")?"active":""; ?>
-								" href="#!"><i class="fa fa-snowflake-o"></i> <span>MASTER DATA PENYAKIT DAN GEJALA</span></a>
+								" href="#!"><i class="fa fa-snowflake-o"></i> <span>DATA MASTER   </span></a>
 								<div class="sub-item">
 									<ul>
 										<li>
@@ -148,6 +148,10 @@
 										<li>
 											<a href="<?php echo site_url("penyakit/pengetahuan") ?>">PENGETAHUAN </a>
 										</li>
+
+										<li>
+											<a href="<?php echo site_url("referensi") ?>">REFERENSI </a>
+										</li>
 										 
 										 
 									</ul>
@@ -156,11 +160,24 @@
 							</li>
 							 
 							<!-- <li class="nav-item">
+								<a class="nav-link  <?php echo ($this->controller=="referensi")?"active":""; ?>" href="<?php echo site_url("referensi"); ?>">
+									<i class="fa fa-book"></i>
+									<span>REFERENSI </span>
+								</a>
+							</li> -->
+
+							  <li class="nav-item">
 								<a class="nav-link  <?php echo ($this->controller=="konsumen")?"active":""; ?>" href="<?php echo site_url("konsumen"); ?>">
 									<i class="fa fa-user"></i>
 									<span>DATA PASIEN</span>
 								</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link <?php echo ($this->controller=="laporan")?"active":""; ?>" href="<?php echo site_url("konsultasi/laporan"); ?>">
+									<i class="fa fa-file"></i>
+									<span>REKAP HASIL KONSULTASI</span>
+								</a>
+							</li>  
 							
 <?php endif; ?>
 
@@ -176,7 +193,9 @@
 									<i class="fa fa-window-restore"></i>
 									<span>LIHAT DATA KONSULTASI</span>
 								</a>
-							</li> -->
+							</li>
+
+							
 							 
 							 
 							<!-- <li class="nav-item">
