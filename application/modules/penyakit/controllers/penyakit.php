@@ -42,7 +42,7 @@ class penyakit extends master_controller {
  		if($this->form_validation->run() == TRUE ) { 
  			unset($post['id']);
 
- 			$arr_gejala = $post['id_gejala'];
+ 			$arr_gejala = isset($post['id_gejala'])?$post['id_gejala']:array();
 
  			unset($post['id_gejala']);
 

@@ -70,7 +70,7 @@ $("#id_gejala").select2();
 
 
 
-function edit(id,kode,penyakit){
+function edit(id,kode,penyakit,keterangan,pengobatan){
 	$("#judul").html('EDIT DATA PENYAKIT ');
 	
 	v_url = '<?php echo site_url("$this->controller/update") ?>';
@@ -80,6 +80,8 @@ function edit(id,kode,penyakit){
 	$("#id").val(id);
 	$("#kode").val(kode);
 	$("#penyakit").val(penyakit);
+	$("#keterangan").val(keterangan);
+	$("#pengobatan").val(pengobatan);
 	$("#formModal").modal('show');
 
 
