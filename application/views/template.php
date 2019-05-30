@@ -126,7 +126,7 @@
 							 
 
 							<li class="nav-item">
-								<a class="nav-link <?php echo ($this->controller=="home")?"active":""; ?>" href="<?php echo base_url(); ?>">
+								<a class="nav-link <?php echo ($this->controller=="home")?"active":""; ?>" href="<?php echo site_url("home"); ?>">
 									<i class="fa fa-home"></i>
 									<span>DASHBOARD</span>
 								</a>
@@ -151,6 +151,9 @@
 
 										<li>
 											<a href="<?php echo site_url("referensi") ?>">REFERENSI </a>
+										</li>
+										<li>
+											<a href="<?php echo site_url("kemiripan") ?>">KEMIRIPAN GEJALA </a>
 										</li>
 										 
 										 

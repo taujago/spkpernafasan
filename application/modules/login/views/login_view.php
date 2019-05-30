@@ -115,7 +115,7 @@ $(document).ready(function(){
 					
 					swal.fire('Info',obj.message,'success').then((result) => {
 
-						location.href='<?php echo base_url(); ?>';
+						location.href='<?php echo site_url("home"); ?>';
 
 					});
 

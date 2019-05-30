@@ -31,7 +31,7 @@ class konsultasi extends master_controller {
 
 function index2(){
 $post = $this->input->post();
-// show_array($post);
+// show_array($post); exit;
 
 $arr = array("tanggal"=>date("Y-m-d"),
 			 "user_id"=>$_SESSION['userdata'][0]['id'] 
@@ -71,8 +71,10 @@ function review($id){
 $this->db->where("pemeriksaan_id",$id);
 $rs = $this->db->get("pemeriksaan_detail");
 foreach($rs->result() as $r): 
-	$post['gejala_id'][] = $r->id;
+	$post['gejala_id'][] = $r->gejala_id;
 endforeach;
+
+
 
 
 // buat referensi array gejala 
@@ -113,9 +115,27 @@ endforeach;
   		$total_bobot = 0;
   		$tmp =0;
   		foreach($ref_gejala as $gejala_id => $bobot): 
+
+
+        // if(in_array($gejala_id, $arr_ref[$row->id]['gejala'])) { // referensi gejala, ada di gejala orang ini 
+
+          
+          
+        // }
+
+
+
   			 $x = (in_array($gejala_id,$arr_ref[$row->id]['gejala']))?1:0;
   			 $y = (in_array($gejala_id,$post['gejala_id']))?1:0;
+
+         // if($x && $y ) {
+         //    echo "ada kemiripan di gejala $row->id <br />";
+         // }
+
+
   			 $arr_ref[$row->id]['kemiripan'][$gejala_id] = !($x xor $y);
+
+  			 
   			 $tmp += $arr_ref[$row->id]['kemiripan'][$gejala_id] * $bobot;
   			 $total_bobot += $bobot;
   		endforeach;
@@ -128,9 +148,12 @@ arsort($arr_hasil);
 
  
 $data_array['ref_gejala'] = $ref_gejala;
+
 $data_array['arr_ref'] = $arr_ref;
 $data_array['arr_hasil'] = $arr_hasil;
 
+// show_array($ref_gejala);
+// show_array($post);
 // show_array($arr_ref);   
 
 // show_array($arr_hasil);  exit;
