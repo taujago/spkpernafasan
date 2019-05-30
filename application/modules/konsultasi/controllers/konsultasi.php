@@ -88,7 +88,10 @@ endforeach;
 	 // redirect("konsultasi/detail/$id_pemeriksaan");
 
 // ambil data referensi pasien lama 
-  $res = $this->db->get("referensi");
+  $this->db->select("r.*, p.penyakit")
+  ->from('referensi r')
+  ->join('penyakit p','p.id = r.penyakit_id');
+  $res = $this->db->get();
 
   $arr_ref = array();
 
@@ -98,7 +101,8 @@ endforeach;
   			"nama" => $row->nama,
   			"umur" => $row->umur,
   			"jk"   => $row->jk,
-  			"penyakit_id" => $row->penyakit_id
+  			"penyakit_id" => $row->penyakit_id,
+  			"penyakit" => $row->penyakit
   		);
 
   		$this->db->where("referensi_id",$row->id);
@@ -127,7 +131,9 @@ $data_array['ref_gejala'] = $ref_gejala;
 $data_array['arr_ref'] = $arr_ref;
 $data_array['arr_hasil'] = $arr_hasil;
 
-// show_array($arr_hasil); 
+// show_array($arr_ref);   
+
+// show_array($arr_hasil);  exit;
 
 // get data pasien 
 $this->db->select("u.*, p.tanggal")

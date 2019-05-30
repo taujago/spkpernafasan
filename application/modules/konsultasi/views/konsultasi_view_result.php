@@ -1,6 +1,6 @@
 <div class="card">
 <div class="card-header">
-	<h3 class="card-title">DATA PASIEN </h3>
+	<h3 class="card-title">DATA DIAGNOSA </h3>
 </div>
 <div class="card-body">
 
@@ -45,7 +45,36 @@
 </div> 
 
 
-
+<div class="card">
+<div class="card-header">
+	<h3 class="card-title">DATA KEMIRIPAN </h3>
+</div>
+<div class="card-body">
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>No.</th>
+			<TH>Nama Pasien</TH>
+			<th>Range Nilai </th>
+			<th>Kriteria</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php $n=0; 
+		foreach($arr_hasil as $id => $bobot ) : 
+		$n++; 
+		?>
+			<tr>
+				<td><?php echo $n; ?> </td>
+				<td><?php echo $arr_ref[$id]['nama']; ?></td>
+				<td><?php echo number_format($bobot,2); ?></td>
+				<td><?php echo $arr_ref[$id]['penyakit']; ?></td>
+			</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+</div>
+</div>
  
 
 
