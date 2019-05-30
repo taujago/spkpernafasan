@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2019 at 06:16 AM
+-- Generation Time: May 30, 2019 at 02:22 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.36
 
@@ -76,6 +76,39 @@ INSERT INTO `gejala` (`id`, `gejala`, `kode`, `bobot`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kemiripan`
+--
+
+DROP TABLE IF EXISTS `kemiripan`;
+CREATE TABLE IF NOT EXISTS `kemiripan` (
+  `id` int(11) NOT NULL,
+  `gejala_id_1` int(11) NOT NULL,
+  `gejala_id_2` int(11) NOT NULL,
+  `bobot` float NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kemiripan`
+--
+
+INSERT INTO `kemiripan` (`id`, `gejala_id_1`, `gejala_id_2`, `bobot`) VALUES
+(1, 121, 121, 1),
+(2, 121, 136, 0.5),
+(3, 121, 125, 0.75),
+(4, 125, 125, 1),
+(5, 125, 136, 0.25),
+(6, 125, 121, 0.75),
+(7, 136, 136, 1),
+(8, 136, 125, 0.25),
+(9, 136, 121, 0.5),
+(10, 122, 122, 1),
+(11, 122, 149, 0.5),
+(12, 149, 149, 1),
+(13, 149, 122, 0.5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `konsultasi`
 --
 
@@ -120,17 +153,14 @@ CREATE TABLE IF NOT EXISTS `pemeriksaan` (
   `tanggal` date DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `penyakit_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pemeriksaan`
 --
 
 INSERT INTO `pemeriksaan` (`id`, `tanggal`, `user_id`, `penyakit_id`) VALUES
-(39, '2019-05-30', 1, 4),
-(40, '2019-05-30', 1, 4),
-(41, '2019-05-30', 1, 4),
-(42, '2019-05-30', 9, 4);
+(44, '2019-05-30', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -143,30 +173,15 @@ CREATE TABLE IF NOT EXISTS `pemeriksaan_detail` (
   `id` int(11) NOT NULL,
   `pemeriksaan_id` int(11) NOT NULL,
   `gejala_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pemeriksaan_detail`
 --
 
 INSERT INTO `pemeriksaan_detail` (`id`, `pemeriksaan_id`, `gejala_id`) VALUES
-(165, 39, 139),
-(166, 39, 122),
-(167, 39, 143),
-(168, 39, 125),
-(169, 40, 139),
-(170, 40, 122),
-(171, 40, 143),
-(172, 40, 125),
-(173, 41, 139),
-(174, 41, 122),
-(175, 41, 143),
-(176, 41, 125),
-(177, 42, 132),
-(178, 42, 122),
-(179, 42, 141),
-(180, 42, 143),
-(181, 42, 144);
+(184, 44, 149),
+(185, 44, 123);
 
 -- --------------------------------------------------------
 
@@ -368,6 +383,12 @@ ALTER TABLE `gejala`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `kemiripan`
+--
+ALTER TABLE `kemiripan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `konsultasi`
 --
 ALTER TABLE `konsultasi`
@@ -426,6 +447,11 @@ ALTER TABLE `referensi_detail`
 ALTER TABLE `gejala`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=154;
 --
+-- AUTO_INCREMENT for table `kemiripan`
+--
+ALTER TABLE `kemiripan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+--
 -- AUTO_INCREMENT for table `konsultasi`
 --
 ALTER TABLE `konsultasi`
@@ -434,12 +460,12 @@ ALTER TABLE `konsultasi`
 -- AUTO_INCREMENT for table `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `pemeriksaan_detail`
 --
 ALTER TABLE `pemeriksaan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=182;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=186;
 --
 -- AUTO_INCREMENT for table `pengetahuan`
 --
