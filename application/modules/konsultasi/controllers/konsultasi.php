@@ -211,7 +211,8 @@ endforeach;
 
 
 // echo "id penyakit $id_penyakit"; exit;
-$this->db->where("id",$id_penyakit);
+// $this->db->where("id",$id_penyakit);
+$this->db->where("id",$arr_ref[$id_penyakit]['penyakit_id']);
 $data_array['penyakit'] = $this->db->get("penyakit")->row();
 
 // terakhir update id penyakit ke data  pemeriksaan 
