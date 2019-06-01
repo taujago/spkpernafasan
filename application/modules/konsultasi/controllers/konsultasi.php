@@ -6,6 +6,8 @@ class konsultasi extends master_controller {
 		 
 		$this->controller = get_class($this);
 
+    $this->method = null; 
+
 	}
 
 	function index(){
@@ -231,6 +233,9 @@ $this->render();
 // }
 function listview(){
 
+$this->method="listview";
+
+
 $data_array = array();
 
 $this->db->select('p.*,u.nama,u.umur,u.jk,u.alamat')
@@ -256,6 +261,8 @@ $this->render();
  
 
 function laporan(){
+
+  $this->method = "laporan";
 
 $sql = " select * from ( 
 SELECT p.*, 
