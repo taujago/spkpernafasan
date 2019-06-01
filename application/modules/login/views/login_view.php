@@ -36,7 +36,13 @@
 
 		<link href="<?php echo base_url(); ?>/assets/sweetalert2/sweetalert2.css" rel="stylesheet" />
 
-
+<style type="text/css">
+html {
+  background: url(<?php echo base_url("landing/img/header-bg.jpg") ?>);
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+</style>
 	
   </head>
 	<body class="login-img">

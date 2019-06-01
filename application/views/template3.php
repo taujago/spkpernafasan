@@ -94,7 +94,7 @@
 					<!-- Navbar Right Menu-->
 					<div class="container-fluid">
 						<div class="d-flex">
-							<a class="header-brand" href="index.html">
+							<a class="header-brand" href="<?php echo site_url("home") ?>">
 								<img alt="vobilet logo" class="header-brand-img" src="<?php echo base_url("dark"); ?>/images/logo.png">
 							</a>
 							<!-- Sidebar toggle button-->
@@ -114,7 +114,7 @@
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
 										<a class="dropdown-item" href="#"><i class="dropdown-icon mdi mdi-account-outline"></i> Ganti password</a>
 										 
-										<a class="dropdown-item" href="login.html"><i class="dropdown-icon mdi mdi-logout-variant"></i> Keluar</a>
+										<a class="dropdown-item" href="<?php echo site_url("login/logout") ?>"><i class="dropdown-icon mdi mdi-logout-variant"></i> Keluar</a>
 									</div>
 								</div>
 							</div>
