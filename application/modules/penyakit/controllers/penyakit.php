@@ -30,6 +30,35 @@ class penyakit extends master_controller {
 		$post = $this->input->post();
 		// show_array($post); exit;
 
+		if(isset($_FILES['gambar'])) { 
+
+			$config['upload_path']          = './uploads/';
+	        $config['allowed_types']        = 'jpg|png|jpeg|gif';
+	        $config['max_size']             = 100000;
+	        $config['max_width']            = 10240;
+	        $config['max_height']           = 7680;
+
+	        $this->load->library('upload', $config);
+
+	        if ( ! $this->upload->do_upload('gambar'))
+	        {
+	                $error =   $this->upload->display_errors();
+	                
+	                // $this->load->view('upload_form', $error);
+	                echo json_encode(array("error"=>true,"message"=>$error));
+	                exit;
+	        }
+	        else {
+	        	$dg =  $this->upload->data();
+	        	// show_array($dg); 
+	        	$post['gambar'] = $dg['file_name'];
+	        }
+
+    	}
+    	else {
+    		unset($post['gambar']);
+    	}
+
 		$this->load->library('form_validation');
  		$this->form_validation->set_rules('kode','Kode','required');
  		$this->form_validation->set_rules('penyakit','penyakit','required');
@@ -84,6 +113,41 @@ class penyakit extends master_controller {
 
 
 		$post = $this->input->post();
+
+		// show_array($_FILES); exit;
+
+
+		if(isset($_FILES['gambar'])) { 
+
+			$config['upload_path']          = './uploads/';
+	        $config['allowed_types']        = 'jpg|png|jpeg|gif';
+	        $config['max_size']             = 100000;
+	        $config['max_width']            = 10240;
+	        $config['max_height']           = 7680;
+
+	        $this->load->library('upload', $config);
+
+	        if ( ! $this->upload->do_upload('gambar'))
+	        {
+	                $error =   $this->upload->display_errors();
+	                
+	                // $this->load->view('upload_form', $error);
+	                echo json_encode(array("error"=>true,"message"=>$error));
+	                exit;
+	        }
+	        else {
+	        	$dg =  $this->upload->data();
+	        	// show_array($dg); 
+	        	$post['gambar'] = $dg['file_name'];
+	        }
+
+    	}
+    	else {
+    		unset($post['gambar']);
+    	}
+
+
+    	// show_array($post); exit;
 
 		$this->load->library('form_validation');
  		$this->form_validation->set_rules('kode','Kode','required');

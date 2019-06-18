@@ -53,13 +53,20 @@
 								<div class="card-body">
 									<div class="card-title text-center">Pendaftaran Pasien</div>
 									<div class="row">
-										
-									<div class="col-md-12">
+									<div class="col-md-6">
 										<div class="form-group">
-										<label for="username" class="form-label">Nama pengguna</label>
-										<input type="text" class="form-control" id="username" name="username"  placeholder="Nama penggguna">
+										<label for="kd_pasien" class="form-label">Kode Pasien</label>
+										<input type="kd_pasien" class="form-control" id="kd_pasien" name="kd_pasien"  readonly="readonly" placeholder="">
 									</div>
 									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+										<label for="username" class="form-label">E-Mail</label>
+										<input type="email" class="form-control" id="email" name="email"  placeholder="E-mail">
+									</div>
+									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group">
 										<label for="password" class="form-label">Kata sandi
@@ -99,12 +106,12 @@
 									</div>
 									</div>
 
-									<div class="col-md-6">
+									<!-- <div class="col-md-6">
 										<div class="form-group">
 										<label for="hp" class="form-label">Nomor HP</label>
 										<input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP">
 									</div>
-									</div>
+									</div> -->
 
 									<div class="col-md-12">
 										<div class="form-group">
@@ -158,6 +165,14 @@
 	
 $(document).ready(function(){
 
+
+$.ajax({
+			url : '<?php echo site_url("general/get_next_id") ?>',
+			dataType : 'json',
+			success : function(obj) {
+				$("#kd_pasien").val(obj.kd_pasien);
+			}
+		});
 
 	$("#frmlogin").submit(function(){
 		$.ajax({

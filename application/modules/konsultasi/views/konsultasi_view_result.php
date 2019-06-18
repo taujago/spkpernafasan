@@ -5,6 +5,8 @@
 <div class="card-body">
 
 <div class="row">
+	<div class="col-md-3"><strong> Kode Pasien </strong></div>
+	<div class="col-md-3">: <?php echo $userdata['kd_pasien']; ?> </div>
 	<div class="col-md-3"><strong> Nama Pasien </strong></div>
 	<div class="col-md-3">: <?php echo $userdata['nama']; ?> </div>
 
@@ -14,8 +16,8 @@
 	<div class="col-md-3"><strong> JK </strong></div>
 	<div class="col-md-3">: <?php echo $userdata['jk']; ?> </div>
 
-	<div class="col-md-3"><strong> No. HP </strong></div>
-	<div class="col-md-3">: <?php echo $userdata['hp']; ?> </div>
+	<div class="col-md-3"><strong> E-mail </strong></div>
+	<div class="col-md-3">: <?php echo $userdata['email']; ?> </div>
 
 	<div class="col-md-3"><strong> Alamat </strong></div>
 	<div class="col-md-3">: <?php echo $userdata['alamat']; ?> </div>
@@ -24,6 +26,10 @@
 
 </div>
 <HR />
+
+<div class="row">
+	
+<div class="col-md-12">
 
 <strong>Gejala yang dialami : </strong> <br />
 <ol>
@@ -41,7 +47,18 @@
 <strong>Pengobatan : </strong><br />
 <?php echo $penyakit->pengobatan; ?>
 
+</div>
+<div class=" mt-5 col-md-12">
+	<strong> Gambar : </strong><br />
+	<?php 
+		$image = (!empty($penyakit->gambar))?$penyakit->gambar:"noimage.png";
+
+	?>
+	<img width="200" height="200" src="<?php echo base_url("uploads/$image") ?>">
+</div>
+
 </div>	
+</div>
 </div> 
 
 

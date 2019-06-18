@@ -31,6 +31,16 @@ class konsumen extends master_controller {
 		$this->render();
 	}
 
+
+	function baru(){
+		$id = $this->cm->nextcode();
+
+		echo "id $id";
+	}
+
+
+	
+
 	function cekpass($password){
 
 		 
@@ -52,8 +62,8 @@ class konsumen extends master_controller {
 
 	}
 
-	function cekuser($username) {
-		$this->db->where("username",$username);
+	function cekuser($email) {
+		$this->db->where("email",$email);
 		$res  = $this->db->get("pengguna");
 		if($res->num_rows() > 0 ) {
 			$this->form_validation->set_message('cekuser', '%s sudah terdaftar');
@@ -66,7 +76,7 @@ class konsumen extends master_controller {
 
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('username', 'Nama pengguna', 'callback_cekuser');
+		$this->form_validation->set_rules('email', 'Nama pengguna', 'callback_cekuser|email');
 		$this->form_validation->set_rules('password', 'Kata sandi', 'callback_cekpass');
 		 
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
@@ -128,6 +138,8 @@ function update(){
 		}
 		 
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
+
+		$this->form_validation->set_rules('email', 'Email', 'required|email');
 		$this->form_validation->set_message('required', '%s Harus diisi');
 
 

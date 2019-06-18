@@ -13,7 +13,7 @@ class login extends CI_Controller {
 	function ceklogin(){
 		$post = $this->input->post();
 
-		$this->db->where("username",$post['username']);
+		$this->db->where("email",$post['email']);
 		$this->db->where("password",md5($post['password']));
 		$res = $this->db->get("pengguna");
 		if($res->num_rows() > 0 ) {
@@ -23,7 +23,7 @@ class login extends CI_Controller {
 			$ret = array("error"=>false,"message"=>"Login berhasil");
 		}
 		else {
-			$ret = array("error"=>true,"message"=>"Login gagal. Username tidak dikenali");
+			$ret = array("error"=>true,"message"=>"Login gagal. email tidak dikenali");
 		}
 
 		echo json_encode($ret);
@@ -61,8 +61,8 @@ class login extends CI_Controller {
 
 	}
 
-	function cekuser($username) {
-		$this->db->where("username",$username);
+	function cekuser($email) {
+		$this->db->where("email",$email);
 		$res  = $this->db->get("pengguna");
 		if($res->num_rows() > 0 ) {
 			$this->form_validation->set_message('cekuser', '%s sudah terdaftar');
@@ -75,7 +75,7 @@ class login extends CI_Controller {
 
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('username', 'Nama pengguna', 'callback_cekuser');
+		$this->form_validation->set_rules('email', 'Nama pengguna', 'callback_cekuser');
 		$this->form_validation->set_rules('password', 'Kata sandi', 'callback_cekpass');
 		 
 		$this->form_validation->set_rules('nama', 'Nama', 'required');

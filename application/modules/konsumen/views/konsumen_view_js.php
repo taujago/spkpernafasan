@@ -44,11 +44,19 @@ $(document).ready(function(){
 		$("#judul").html('TAMBAH DATA PASIEN ');
 		$("#formModal").modal('show');
 		v_url = '<?php echo site_url("$this->controller/save") ?>';
+
+		$.ajax({
+			url : '<?php echo site_url("general/get_next_id") ?>',
+			dataType : 'json',
+			success : function(obj) {
+				$("#kd_pasien").val(obj.kd_pasien);
+			}
+		});
 	}
 
 
 
-function edit(id,username,nama,hp,alamat,umur,jk){
+function edit(id,email,nama,hp,alamat,umur,jk){
 	$("#judul").html('EDIT DATA PASIEN ');
 
 
@@ -58,7 +66,7 @@ function edit(id,username,nama,hp,alamat,umur,jk){
 	$("#id").val(id);
 	$("#password").val('');
 	$("#password2").val('');
-	$("#username").val(username);
+	$("#email").val(email);
 	$("#nama").val(nama);
 	$("#hp").val(hp);
 	$("#alamat").val(alamat);

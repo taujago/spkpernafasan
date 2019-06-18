@@ -45,48 +45,48 @@ html {
 </style>
 	
   </head>
-	<body class="login-img">
-		<div id="global-loader" ></div>
-		<div class="page">
-			<div class="page-single">
-				<div class="container">
-					<div class="row">
-						<div class="col col-login mx-auto">
-							<div class="text-center mb-6">
-								<!-- <img src="<?php echo base_url(); ?>/assets/images/brand/logo.png" class="h-6" alt=""> -->
-							</div>
-							<form id="frmlogin" class="card" method="post">
-								<div class="card-body p-6">
-									<div class="card-title text-center">Silahkan login</div>
-									<div class="form-group">
-										<label for="username" class="form-label">Nama pengguna</label>
-										<input type="text" class="form-control" id="username" name="username"  placeholder="Nama penggguna">
-									</div>
-									<div class="form-group">
-										<label for="password" class="form-label">Kata sandi
-											<a href="<?php echo site_url("login/lupapassword"); ?>" class="float-right small">Lupa password</a>
-										</label>
-										<input type="password" class="form-control" id="password"  name="password" placeholder="Kata sandi">
-									</div>
-									<div class="form-group">
-										<label class="custom-control custom-checkbox">
-											<input type="checkbox" class="custom-control-input" />
-											<span class="custom-control-label">Ingat saya </span>
-										</label>
-									</div>
-									<div class="form-footer">
-										<button type="submit" class="btn btn-primary btn-block"> <i class="fa fa-check"></i> Masuk </button>
-									</div>
-									<div class="text-center text-muted mt-3">
-										Belum terdaftar ?  <a href="<?php echo site_url("login/daftar"); ?>">Daftar di sini </a>
-									</div>
-								</div>
-								
-							</form>
+<body class="login-img">
+<div id="global-loader" ></div>
+<div class="page">
+<div class="page-single">
+	<div class="container">
+		<div class="row">
+			<div class="col col-login mx-auto">
+				<div class="text-center mb-6">
+					<!-- <img src="<?php echo base_url(); ?>/assets/images/brand/logo.png" class="h-6" alt=""> -->
+				</div>
+				<form id="frmlogin" class="card" method="post">
+					<div class="card-body p-6">
+						<div class="card-title text-center">Silahkan login</div>
+						<div class="form-group">
+							<label for="email" class="form-label">E-mail</label>
+							<input type="text" class="form-control" id="email" name="email"  placeholder="E-mail" autocomplete="false" />
+						</div>
+						<div class="form-group">
+							<label for="password" class="form-label">Kata sandi
+								<a href="<?php echo site_url("login/lupapassword"); ?>" class="float-right small">Lupa password</a>
+							</label>
+							<input type="password" class="form-control" id="password"  name="password" placeholder="Kata sandi">
+						</div>
+						<div class="form-group">
+							<label class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" />
+								<span class="custom-control-label">Ingat saya </span>
+							</label>
+						</div>
+						<div class="form-footer">
+							<button type="submit" class="btn btn-primary btn-block"> <i class="fa fa-check"></i> Masuk </button>
+						</div>
+						<div class="text-center text-muted mt-3">
+							Belum terdaftar ?  <a href="<?php echo site_url("login/daftar"); ?>">Daftar di sini </a>
 						</div>
 					</div>
-				</div>
+					
+				</form>
 			</div>
+		</div>
+	</div>
+</div>
 		</div>
 		
 		

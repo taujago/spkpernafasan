@@ -132,7 +132,9 @@
 								</a>
 							</li>
 
-<?php if($_SESSION['userdata'][0]['level'] == 1 ) : ?>		
+<?php 
+echo "session levl ". $_SESSION['userdata'][0]['level'];  exit;
+if($_SESSION['userdata'][0]['level'] == 1 ) : ?>		
 							<li class="nav-item with-sub">
 								<a class="nav-link
 								 <?php echo ($this->controller=="gejala" || $this->controller=="penyakit" || $this->controller=="pengetahuan")?"active":""; ?>

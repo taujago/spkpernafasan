@@ -21,11 +21,12 @@
 				
 				 
 				<th width="">NO.</th>
-				<th width="">USERNAME</th>
+				<th width="">KD PASIEN</th>
+				<th width="">EMAIL</th>
 				<th width="">NAMA</th>
 				<th width="">UMUR</th>
 				<th width="">JK</th>
-				<th width="">NOMOR HP</th>
+				<!-- <th width="">NOMOR HP</th> -->
 				<th width="">ALAMAT</th>
 				<th width="">PROSES</th>
 				 
@@ -40,16 +41,17 @@ foreach($record->result() as $row) :
 ?>
 			<tr>
 				<th scope="row"><?php echo $n ?></th>
-				<td><?php echo $row->username; ?></td>
+				<td><?php echo $row->kd_pasien; ?></td>
+				<td><?php echo $row->email; ?></td>
 				<td><?php echo $row->nama; ?></td>
 				<td><?php echo $row->umur; ?></td>
 				<td><?php echo $row->jk; ?></td>
-				<td><?php echo $row->hp; ?></td>
+				<!-- <td><?php echo $row->hp; ?></td> -->
 				<td><?php echo $row->alamat; ?></td>
 				 
 				 
 				<td>
-					<a href="#!" onclick="edit('<?php echo $row->id ?>','<?php echo $row->username ?>','<?php echo $row->nama ?>','<?php echo $row->hp ?>','<?php echo $row->alamat ?>','<?php echo $row->umur ?>','<?php echo $row->jk ?>')"   class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
+					<a href="#!" onclick="edit('<?php echo $row->id ?>','<?php echo $row->email ?>','<?php echo $row->nama ?>','<?php echo $row->hp ?>','<?php echo $row->alamat ?>','<?php echo $row->umur ?>','<?php echo $row->jk ?>')"   class="btn btn-warning text-light"><i class="fa fa-pencil"></i>Edit</a>
 					<a href="#!" onclick="hapus('<?php echo $row->id; ?>');"  class="btn btn-danger text-light"><i class="fa fa-trash"></i>Hapus	</a>
 </td>
 			</tr>
@@ -74,65 +76,72 @@ foreach($record->result() as $row) :
 			<form id="frmkriteria">
 				<div class="row">
 
-				 <div class="col-md-12">
-										<div class="form-group">
-										<label for="username" class="form-label">Nama pengguna</label>
-										<input type="text" class="form-control" id="username" name="username"  placeholder="Nama penggguna">
-									</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-										<label for="password" class="form-label">Kata sandi
-											 
-										</label>
-										<input type="password" class="form-control" id="password"  name="password" placeholder="Kata sandi">
-									</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-										<label for="password2" class="form-label">Ulangi Kata sandi
-											 
-										</label>
-										<input type="password" class="form-control" id="password2"  name="password2" placeholder="Kata sandi">
-									</div>
-									</div>
-									
-									<div class="col-md-6">
-										<div class="form-group">
-										<label for="username" class="form-label">Nama lengkap</label>
-										<input type="text" class="form-control" id="nama" name="nama"  placeholder="Nama lengkap">
-									</div>
-									</div>
+				 <div class="col-md-6">
+					<div class="form-group">
+					<label for="email" class="form-label">Email</label>
+					<input type="email" class="form-control" id="email" name="email"  placeholder="Nama penggguna">
+				</div>
+				</div>
 
-									<div class="col-md-6">
-										<div class="form-group">
-										<label for="jk" class="form-label">JK</label>
-										<?php 
-										$arr = array("L"=>"Laki laki ","P"=>"Perempuan");
-										echo form_dropdown("jk",$arr,'','class="form-control" id="jk"');
-										?>
-									</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-										<label for="umur" class="form-label">Umur</label>
-										<input type="number" class="form-control" id="umur" name="umur"  placeholder="Umur">
-									</div>
-									</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					<label for="kd_pasien" class="form-label">Kode Pasien</label>
+					<input type="text" class="form-control" id="kd_pasien" name="kd_pasien"  placeholder="Kode pasien">
+				</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					<label for="password" class="form-label">Kata sandi
+						 
+					</label>
+					<input type="password" class="form-control" id="password"  name="password" placeholder="Kata sandi">
+				</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					<label for="password2" class="form-label">Ulangi Kata sandi
+						 
+					</label>
+					<input type="password" class="form-control" id="password2"  name="password2" placeholder="Kata sandi">
+				</div>
+				</div>
+				
+				<div class="col-md-6">
+					<div class="form-group">
+					<label for="nama" class="form-label">Nama lengkap</label>
+					<input type="text" class="form-control" id="nama" name="nama"  placeholder="Nama lengkap">
+				</div>
+				</div>
 
-									<div class="col-md-6">
-										<div class="form-group">
-										<label for="hp" class="form-label">Nomor HP</label>
-										<input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP">
-									</div>
-									</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					<label for="jk" class="form-label">JK</label>
+					<?php 
+					$arr = array("L"=>"Laki laki ","P"=>"Perempuan");
+					echo form_dropdown("jk",$arr,'','class="form-control" id="jk"');
+					?>
+				</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+					<label for="umur" class="form-label">Umur</label>
+					<input type="number" class="form-control" id="umur" name="umur"  placeholder="Umur">
+				</div>
+				</div>
 
-									<div class="col-md-12">
-										<div class="form-group">
-										<label for="alamat" class="form-label">Alamat</label>
-										<input type="text" class="form-control" id="alamat" name="alamat"  placeholder="Alamat">
-									</div>
-									</div>
+				<!-- <div class="col-md-6">
+					<div class="form-group">
+					<label for="hp" class="form-label">Nomor HP</label>
+					<input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP">
+				</div>
+				</div> -->
+
+				<div class="col-md-12">
+					<div class="form-group">
+					<label for="alamat" class="form-label">Alamat</label>
+					<input type="text" class="form-control" id="alamat" name="alamat"  placeholder="Alamat">
+				</div>
+				</div>
 				
 					 
 

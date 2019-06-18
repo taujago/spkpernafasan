@@ -54,5 +54,18 @@ function arr_dropdown_penyakit(){
     return $arr;
  }
 
+ function nextcode(){
+    $this->db->select('max(id) as id ',false)->from('pengguna');
+
+    $d = $this->db->get()->row();
+    $id = $d->id;
+
+    $arr = array(1=>"00",2=>"0",3=>"");
+
+    return "P".$arr[count($id)].$id;
+
+
+ }
+
 }
 ?>
