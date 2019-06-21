@@ -1,4 +1,4 @@
-<table class="table-striped table">
+<table class="table-striped table table-bordered">
 	<thead>
 		<tr>
 			<th rowspan="2">No. </th>
@@ -34,8 +34,9 @@
 	<?php endforeach; ?>
 	<tr>
 		<td colspan="2"><strong>Total </strong></td>
-		<td><?php echo $tp; ?></td>
 		<td><?php echo $tl; ?></td>
+		<td><?php echo $tp; ?></td>
+		
 		<td><?php echo ($tl+$tp); ?></td>
 
 	</tr>

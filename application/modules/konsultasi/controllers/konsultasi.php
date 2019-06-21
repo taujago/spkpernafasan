@@ -279,6 +279,13 @@ left join pengguna u on u.id = pm.user_id
   order by x.jumlah desc
 ";
 
+
+$sql = "  
+SELECT p.*, count(pm.id) as jumlah , sum( if(u.jk='L',1,0)) as L, sum( if(u.jk='P',1,0)) as P FROM penyakit p join pemeriksaan pm on p.id = pm.penyakit_id join pengguna u on u.id = pm.user_id group by p.id
+   
+";
+
+
 $data_array['record'] = $this->db->query($sql);
 
 $content = $this->load->view($this->controller."_laporan_view",$data_array,true);

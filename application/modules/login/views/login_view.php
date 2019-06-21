@@ -37,7 +37,7 @@
 		<link href="<?php echo base_url(); ?>/assets/sweetalert2/sweetalert2.css" rel="stylesheet" />
 
 <style type="text/css">
-html {
+.login-img2 {
   background: url(<?php echo base_url("landing/img/header-bg.jpg") ?>);
   background-repeat: no-repeat;
   background-size: auto;
@@ -45,7 +45,7 @@ html {
 </style>
 	
   </head>
-<body class="login-img">
+<body class="login-img2">
 <div id="global-loader" ></div>
 <div class="page">
 <div class="page-single">
