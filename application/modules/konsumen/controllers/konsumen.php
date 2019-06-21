@@ -183,6 +183,7 @@ function update(){
 function hapus($id) {
 
 	$this->db->where("id",$id);
+	// pernghapusan 
 	$res = $this->db->delete("pengguna");
 	if($res){
 		$ret = array("error"=>false,"message"=>"Data harga berhasil dihapus");
