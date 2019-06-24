@@ -84,9 +84,14 @@ $res = $this->db->get("gejala");
 $ref_gejala = array();
 foreach($res->result() as $rg): 
 	$ref_gejala[$rg->id] = $rg->bobot;
+   $data_gejala[$rg->id] = array("kode"=>$rg->kode,"bobot"=>$rg->bobot);
 endforeach;
 
  
+
+// show_array($data_gejala); exit;
+ 
+
 
  
 	 // redirect("konsultasi/detail/$id_pemeriksaan");
@@ -114,6 +119,8 @@ endforeach;
   		foreach($rs_ref->result() as $rf ) : 
   			$arr_ref[$row->id]['gejala'][] = $rf->gejala_id ;
   		endforeach;
+
+
   		$total_bobot = 0;
   		$tmp =0;
   		foreach($ref_gejala as $gejala_id => $bobot): 
@@ -162,6 +169,9 @@ endforeach;
   			 
         
   			 
+         $arr_ref[$row->id]['jumlah'][$gejala_id] =  $arr_ref[$row->id]['kemiripan'][$gejala_id] * $bobot;
+
+
   			 $tmp += $arr_ref[$row->id]['kemiripan'][$gejala_id] * $bobot;
   			 $total_bobot += $bobot;
   		endforeach;
@@ -181,7 +191,7 @@ $data_array['arr_hasil'] = $arr_hasil;
 
 // show_array($ref_gejala);
 // show_array($post);
-// show_array($arr_ref);   
+// show_array($arr_ref);    exit;
 
 // show_array($arr_hasil);  exit;
 
@@ -193,6 +203,8 @@ $this->db->select("u.*, p.tanggal")
 
 $data_array['userdata'] = $this->db->get()->row_array();
 
+// $data_array['post'] = $post;
+// show_array($post); exit;
 
 // get data gejala yang dialami 
 $this->db->select("g.*")
@@ -219,7 +231,8 @@ $data_array['penyakit'] = $this->db->get("penyakit")->row();
 $this->db->where("id",$id);
 $this->db->update("pemeriksaan",array("penyakit_id"=>$id_penyakit));
 
-
+$data_array['post'] = $post;
+$data_array['data_gejala'] = $data_gejala;
 $content = $this->load->view($this->controller."_view_result",$data_array,true);
 
 $this->set_title("HASIL DIAGNOSA");
