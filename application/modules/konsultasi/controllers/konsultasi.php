@@ -191,7 +191,7 @@ $data_array['arr_hasil'] = $arr_hasil;
 
 // show_array($ref_gejala);
 // show_array($post);
-// show_array($arr_ref);    exit;
+// show_array($arr_ref);     
 
 // show_array($arr_hasil);  exit;
 
@@ -229,7 +229,8 @@ $data_array['penyakit'] = $this->db->get("penyakit")->row();
 
 // terakhir update id penyakit ke data  pemeriksaan 
 $this->db->where("id",$id);
-$this->db->update("pemeriksaan",array("penyakit_id"=>$id_penyakit));
+$this->db->update("pemeriksaan",array("penyakit_id"=>$arr_ref[$id_penyakit]['penyakit_id']));
+// echo $this->db->last_query(); exit;
 
 $data_array['post'] = $post;
 $data_array['data_gejala'] = $data_gejala;
